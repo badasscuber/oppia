@@ -42,6 +42,9 @@ oppia.directive('oppiaInteractiveTextInput', [
             $attrs.placeholderWithValue);
           $scope.rows = (
             HtmlEscaperService.escapedJsonToObj($attrs.rowsWithValue));
+          $scope.speechRecognitionLanguage = (
+            HtmlEscaperService.escapedJsonToObj(
+              $attrs.speechRecognitionLanguageWithValue));
           $scope.answer = '';
           $scope.labelForFocusTarget = $attrs.labelForFocusTarget || null;
 
@@ -49,11 +52,18 @@ oppia.directive('oppiaInteractiveTextInput', [
             type: 'unicode',
             ui_config: {}
           };
+
           if ($scope.placeholder) {
             $scope.schema.ui_config.placeholder = $scope.placeholder;
           }
           if ($scope.rows && $scope.rows !== 1) {
             $scope.schema.ui_config.rows = $scope.rows;
+          }
+          if ($scope.speechspeechRecognitionLanguage === '(none)') {
+            $scope.schema.ui_config.speechRecognitionLanguage = '';
+          } else {
+            $scope.schema.ui_config.speechRecognitionLanguage =
+            $scope.speechRecognitionLanguage;
           }
 
           $scope.submitAnswer = function(answer) {

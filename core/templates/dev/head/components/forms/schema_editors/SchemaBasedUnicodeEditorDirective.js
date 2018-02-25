@@ -33,8 +33,10 @@ oppia.directive('schemaBasedUnicodeEditor', [
         'schema_based_unicode_editor_directive.html'),
       restrict: 'E',
       controller: [
-        '$scope', '$filter', '$sce', '$translate', 'DeviceInfoService',
-        function($scope, $filter, $sce, $translate, DeviceInfoService) {
+        '$scope', '$filter', '$sce', '$window', '$translate',
+        'DeviceInfoService',
+        function($scope, $filter, $sce, $window, $translate,
+            DeviceInfoService) {
           if ($scope.uiConfig() && $scope.uiConfig().coding_mode) {
             // Flag that is flipped each time the codemirror view is
             // shown. (The codemirror instance needs to be refreshed
@@ -120,6 +122,57 @@ oppia.directive('schemaBasedUnicodeEditor', [
           $scope.getDisplayedValue = function() {
             return $sce.trustAsHtml(
               $filter('convertUnicodeWithParamsToHtml')($scope.localValue));
+          };
+
+
+          $scope.allowSpeechRecognition = (
+            $scope.uiConfig() &&
+            $scope.uiConfig().speechRecognitionLanguage &&
+            !!$window.webkitSpeechRecognition);
+
+          $scope.isCurrentlyRecording = false;
+
+          var recognition = null;
+
+          if ($scope.allowSpeechRecognition) {
+            recognition = new webkitSpeechRecognition();
+          }
+
+          $scope.toggleSpeechRecognition = function() {
+            if ($scope.isCurrentlyRecording) {
+              recognition.stop();
+              $scope.isCurrentlyRecording = false;
+              return;
+            }
+
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = true;
+            recognition.lang = $scope.uiConfig().speechRecognitionLanguage;
+
+            $scope.isCurrentlyRecording = true;
+            recognition.start();
+
+            recognition.onerror = function(evt) {
+              recognition.abort();
+              $scope.isCurrentlyRecording = false;
+            };
+
+            recognition.onresult = function(evt) {
+              for (var i = 0; i < evt.results.length; i++) {
+                if (evt.results[i].isFinal) {
+                  if ($scope.localValue && evt.results[i][0].transcript &&
+                      $scope.localValue[$scope.localValue.length - 1] !== ' ') {
+                    $scope.localValue += ' ';
+                  }
+                  $scope.localValue += evt.results[i][0].transcript;
+                  recognition.abort();
+                  $scope.isCurrentlyRecording = false;
+                  $scope.$apply();
+                  break;
+                }
+              }
+            };
           };
         }
       ]
