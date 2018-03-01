@@ -177,8 +177,7 @@ class InteractionUnitTests(test_utils.GenericTestBase):
             'description': 'Language for speech recognition (only in Chrome).',
             'schema': {
                 'type': 'unicode',
-                'choices': ['(none)', 'en', 'es'],
-                'value': 'srl'
+                'choices': ['(none)', 'en', 'es']
             },
             'default_value': 'en'
         }])

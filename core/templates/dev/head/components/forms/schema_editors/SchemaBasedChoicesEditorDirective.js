@@ -37,13 +37,7 @@ oppia.directive('schemaBasedChoicesEditor', [
         'schema_based_choices_editor_directive.html'),
       restrict: 'E',
       compile: NestedDirectivesRecursionTimeoutPreventionService.compile,
-      controller: ['$scope', '$window', function($scope, $window) {
-        if ($scope.schema().value && $scope.schema().value === 'srl' &&
-            !$window.webkitSpeechRecognition) {
-          $scope.isDisabled = function(){
-            return true;
-          };
-        }
+      controller: ['$scope', function($scope) {
         $scope.getReadonlySchema = function() {
           var readonlySchema = angular.copy($scope.schema());
           delete readonlySchema.choices;
