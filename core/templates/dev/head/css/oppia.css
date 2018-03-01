@@ -173,20 +173,6 @@ body {
   width: 100%;
 }
 
-oppia-editable-section .oppia-unicode-form-mic-button {
-  height: 35px;
-  margin-left: 575px;
-  margin-top: -62px;
-  padding-top: 5px;
-}
-
-.conversation-skin-tutor-card .oppia-unicode-form-mic-button {
-  height: 35px;
-  margin-left: 485px;
-  margin-top: -62px;
-  padding-top: 5px;
-}
-
 .oppia-skip-to-content {
   left: -10000px;
   padding: 6px;

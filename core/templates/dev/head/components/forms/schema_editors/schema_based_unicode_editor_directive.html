@@ -1,5 +1,15 @@
 <span>
   <span ng-if="!getCodingMode() && getRows()">
+    <a href="" class="mic-btn"
+               ng-click="toggleSpeechRecognition()"
+               ng-if="allowSpeechRecognition">
+
+      <i class="fa fa-microphone"
+         ng-if="!isCurrentlyRecording"
+         style="color: black;"></i>
+      <i class="mic-open" ng-if="isCurrentlyRecording"></i>
+
+    </a>
     <textarea ng-model="$parent.localValue"
               rows="<[getRows()]>"
               placeholder="<[getPlaceholder()]>"
@@ -11,21 +21,22 @@
   </span>
 
   <span ng-if="!getCodingMode() && !getRows()">
+    <a href="" class="mic-btn"
+               ng-click="toggleSpeechRecognition()"
+               ng-if="allowSpeechRecognition">
+
+      <i class="fa fa-microphone"
+         ng-if="!isCurrentlyRecording"
+         style="color: black;"></i>
+      <i class="mic-open" ng-if="isCurrentlyRecording"></i>
+
+    </a>
     <input type="text" ng-disabled="isDisabled()" class="form-control"
            ng-model="$parent.localValue" ng-blur="onInputBlur()"
            ng-focus="onInputFocus()" focus-on="<[labelForFocusTarget()]>"
            ng-keypress="onKeypress($event)" placeholder="<[getPlaceholder()]>" apply-validation="validators()"
            style="display: inline;">
   </span>
-
-   <span ng-if="allowSpeechRecognition && !getCodingMode()" ng-click="toggleSpeechRecognition()">
-     <img ng-if="!isCurrentlyRecording"
-          src="/assets/images/general/microphone.svg"
-          class="oppia-unicode-form-mic-button">
-     <img ng-if="isCurrentlyRecording"
-          src="/assets/images/general/microphone-open.png"
-          class="oppia-unicode-form-mic-button">
-   </span>
 
   <!-- Note that we do not yet support ng-blur for the code editor. -->
   <div ng-if="getCodingMode()" style="border: 1px solid #ccc;">
@@ -36,3 +47,27 @@
     </div>
   </div>
 </span>
+
+<style>
+
+  .mic-btn {
+    display: block;
+    position: absolute;
+    right: 5px;
+    margin: 4px 0;
+  }
+
+  .fa-microphone:before {
+    bottom: 1px;
+    font-size: 32px;
+    padding: 16px;
+  }
+
+  .mic-open:before {
+    bottom: 5px;
+    content: url('/assets/images/general/microphone-open.png');
+    position: relative;
+    right: 10px;
+  }
+
+</style>
