@@ -60,14 +60,6 @@ class TextInput(base.BaseInteraction):
             }]
         },
         'default_value': 1,
-    }, {
-        'name': 'speechRecognitionLanguage',
-        'description': 'Language for speech recognition (only in Chrome).',
-        'schema': {
-            'type': 'unicode',
-            'choices': ['(none)', 'en', 'es']
-        },
-        'default_value': 'en'
     }]
 
     _answer_visualization_specs = [{

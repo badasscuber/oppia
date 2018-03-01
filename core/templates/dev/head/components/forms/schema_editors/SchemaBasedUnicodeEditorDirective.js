@@ -34,9 +34,9 @@ oppia.directive('schemaBasedUnicodeEditor', [
       restrict: 'E',
       controller: [
         '$scope', '$filter', '$sce', '$window', '$translate',
-        'DeviceInfoService',
+        'DeviceInfoService', 'ExplorationPlayerService',
         function($scope, $filter, $sce, $window, $translate,
-            DeviceInfoService) {
+            DeviceInfoService, ExplorationPlayerService) {
           if ($scope.uiConfig() && $scope.uiConfig().coding_mode) {
             // Flag that is flipped each time the codemirror view is
             // shown. (The codemirror instance needs to be refreshed
@@ -127,7 +127,6 @@ oppia.directive('schemaBasedUnicodeEditor', [
 
           $scope.allowSpeechRecognition = (
             $scope.uiConfig() &&
-            $scope.uiConfig().speechRecognitionLanguage &&
             !!$window.webkitSpeechRecognition);
 
           $scope.isCurrentlyRecording = false;
@@ -148,7 +147,9 @@ oppia.directive('schemaBasedUnicodeEditor', [
             recognition = new webkitSpeechRecognition();
             recognition.continuous = false;
             recognition.interimResults = true;
-            recognition.lang = $scope.uiConfig().speechRecognitionLanguage;
+            var explorationLanguageCode = (
+                    ExplorationPlayerService.getExplorationLanguageCode());
+            recognition.lang = explorationLanguageCode;
 
             $scope.isCurrentlyRecording = true;
             recognition.start();

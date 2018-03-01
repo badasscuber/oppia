@@ -172,14 +172,6 @@ class InteractionUnitTests(test_utils.GenericTestBase):
                 }]
             },
             'default_value': 1,
-        }, {
-            'name': 'speechRecognitionLanguage',
-            'description': 'Language for speech recognition (only in Chrome).',
-            'schema': {
-                'type': 'unicode',
-                'choices': ['(none)', 'en', 'es']
-            },
-            'default_value': 'en'
         }])
 
     def test_interaction_rules(self):
