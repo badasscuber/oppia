@@ -20,12 +20,14 @@
   </span>
 
   <span ng-if="allowSpeechRecognition && !getCodingMode()" ng-click="toggleSpeechRecognition()">
-    <img ng-if="!isCurrentlyRecording"
-         src="/assets/images/general/microphone.svg"
-         class="oppia-unicode-form-mic-button">
-    <img ng-if="isCurrentlyRecording"
-         src="/assets/images/general/microphone-open.png"
-         class="oppia-unicode-form-mic-button">
+    <div style="height:35px;"">
+      <img ng-if="!isCurrentlyRecording"
+           src="/assets/images/general/microphone.svg"
+           class="oppia-unicode-form-mic-button">
+      <img ng-if="isCurrentlyRecording"
+           src="/assets/images/general/microphone-open.png"
+           class="oppia-unicode-form-mic-button">
+    </div>
   </span>
 
   <!-- Note that we do not yet support ng-blur for the code editor. -->
