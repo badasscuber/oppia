@@ -1,14 +1,14 @@
 <span>
   <span ng-if="!getCodingMode() && getRows()">
-  <textarea ng-if="!getCodingMode() && getRows()"
-            ng-model="$parent.localValue"
-            rows="<[getRows()]>"
-            placeholder="<[getPlaceholder()]>"
-            ng-disabled="isDisabled()"
-            class="form-control" focus-on="<[labelForFocusTarget()]>"
-            ng-blur="onInputBlur()"
-            ng-focus="onInputFocus()">
-  </textarea>
+    <textarea ng-if="!getCodingMode() && getRows()"
+              ng-model="$parent.localValue"
+              rows="<[getRows()]>"
+              placeholder="<[getPlaceholder()]>"
+              ng-disabled="isDisabled()"
+              class="form-control" focus-on="<[labelForFocusTarget()]>"
+              ng-blur="onInputBlur()"
+              ng-focus="onInputFocus()">
+    </textarea>
   </span>
 
   <span ng-if="!getCodingMode() && !getRows()">
