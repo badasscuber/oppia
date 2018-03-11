@@ -34,9 +34,9 @@ oppia.directive('schemaBasedUnicodeEditor', [
       restrict: 'E',
       controller: [
         '$scope', '$filter', '$sce', '$window', '$translate',
-        'DeviceInfoService', 'ExplorationPlayerService',
+        'DeviceInfoService', 'ExplorationLanguageCodeService',
         function($scope, $filter, $sce, $window, $translate,
-            DeviceInfoService, ExplorationPlayerService) {
+            DeviceInfoService, ExplorationLanguageCodeService) {
           if ($scope.uiConfig() && $scope.uiConfig().coding_mode) {
             // Flag that is flipped each time the codemirror view is
             // shown. (The codemirror instance needs to be refreshed
@@ -124,10 +124,19 @@ oppia.directive('schemaBasedUnicodeEditor', [
               $filter('convertUnicodeWithParamsToHtml')($scope.localValue));
           };
 
+          var explorationLanguageCode = (
+            ExplorationLanguageCodeService.displayed);
+
+          var isSpeechRecognitionLanguagesupported = (
+            constants.SUPPORTED_SPEECH_RECOGNITION_LANGUAGES.filter(
+              function(languageCodeDict) {
+                return languageCodeDict.code === explorationLanguageCode;
+              }));
 
           $scope.allowSpeechRecognition = (
             $scope.uiConfig() &&
-            !!$window.webkitSpeechRecognition);
+            !!$window.webkitSpeechRecognition &&
+            (isSpeechRecognitionLanguagesupported !== 0));
 
           $scope.isCurrentlyRecording = false;
 
@@ -147,8 +156,6 @@ oppia.directive('schemaBasedUnicodeEditor', [
             recognition = new webkitSpeechRecognition();
             recognition.continuous = false;
             recognition.interimResults = true;
-            var explorationLanguageCode = (
-                    ExplorationPlayerService.getExplorationLanguageCode());
             recognition.lang = explorationLanguageCode;
 
             $scope.isCurrentlyRecording = true;
