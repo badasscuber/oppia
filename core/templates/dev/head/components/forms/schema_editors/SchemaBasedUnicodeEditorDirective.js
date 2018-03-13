@@ -131,12 +131,12 @@ oppia.directive('schemaBasedUnicodeEditor', [
             constants.SUPPORTED_SPEECH_RECOGNITION_LANGUAGES.filter(
               function(languageCodeDict) {
                 return languageCodeDict.code === explorationLanguageCode;
-              }));
+              }) !== 0);
 
           $scope.allowSpeechRecognition = (
             $scope.uiConfig() &&
             !!$window.webkitSpeechRecognition &&
-            (isSpeechRecognitionLanguagesupported !== 0));
+            isSpeechRecognitionLanguagesupported);
 
           $scope.isCurrentlyRecording = false;
 
